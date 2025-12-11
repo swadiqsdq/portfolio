@@ -1,0 +1,667 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Admin | Add Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+
+    <style>
+    /* === BASE STYLES === */
+    * {
+        margin: 0; padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* === MAIN BACKGROUND === */
+    body {
+        background: #1e2a3a;
+        height: 100vh;
+        overflow: hidden; /* Hide body overflow on desktop */
+        display: flex;
+    }
+    
+    /* ---- Sidebar ---- */
+    .sidebar {
+        width: 260px;
+        background: #233447;
+        border-right: 1px solid rgba(255,255,255,0.08);
+        padding-top: 30px;
+        color: #fff;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.25);
+        overflow-y: auto; 
+        flex-shrink: 0; 
+        transition: transform 0.3s ease; /* For mobile slide effect */
+    }
+    
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 26px;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+    
+    /* Sidebar Buttons AND Links */
+    .sidebar button, .sidebar a {
+        width: 100%;
+        padding: 18px 20px;
+        font-size: 17px;
+        background: transparent;
+        border: none;
+        color: #c7d3e3;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: 0.4s;
+        text-decoration: none;
+    }
+    
+    .sidebar button:hover, .sidebar a:hover {
+        background: rgba(255,255,255,0.08);
+        padding-left: 35px;
+        color: #fff;
+    }
+    
+    /* ---- Main Content ---- */
+    .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 50px;
+        /* Ensure content doesn't jump when scrollbar appears */
+        overflow-x: hidden; 
+    }
+
+    /* ---- Mobile Menu Toggle (Hamburger) ---- */
+    #menu-toggle {
+        display: none; /* Hidden by default on desktop */
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 100; /* Above all content */
+        background: #4b84ca;
+        color: #fff;
+        border: none;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    #menu-toggle:hover {
+        background: #32669b;
+    }
+    
+    /* ---- Cards ---- */
+    .card {
+        background: #2f4054;
+        padding: 35px;
+        width: 70%;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        border: 1px solid rgba(255,255,255,0.05);
+        animation: fadeIn 0.4s ease-in-out;
+        margin: 0 auto; /* Center card on desktop view */
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card h3 {
+        color: #fff;
+        font-size: 28px;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+    
+    /* ---- Form Inputs ---- */
+    input, textarea {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        background: #3a4b62;
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    input::placeholder,
+    textarea::placeholder {
+        color: #b9c4d4;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* ---- Submit Button ---- */
+    .submit-btn {
+        padding: 14px 26px;
+        background: #4b84ca;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+    
+    .submit-btn:hover {
+        background: #32669b;
+    }
+    
+    /* Hide all tabs initially */
+    .tab {
+        display: none;
+    }
+    
+    .popup {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        animation: fadeInOut 3s ease;
+        z-index: 1000;
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-20px); }
+        10% { opacity: 1; transform: translateY(0); }
+        90% { opacity: 1; }
+        100% { opacity: 0; transform: translateY(-20px); }
+    }
+
+    /* Custom select styling */
+    .custom-select {
+        appearance: none; 
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: #3a4b62 url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'><path fill='%23ffffff' d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+        background-size: 12px;
+        cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white; 
+        transition: all 0.3s ease;
+        padding: 14px; /* Match input padding */
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .custom-select:focus {
+        border-color: #4b84ca;
+        box-shadow: 0 0 5px rgba(75, 132, 202, 0.5);
+    }
+
+    .custom-select option {
+        background-color: #2f4054; 
+        color: white;             
+    }
+    
+    /* ------------------------------------------------------------------ */
+    /* 🚨 RESPONSIVE STYLES (Hamburger Menu) 🚨 */
+    /* ------------------------------------------------------------------ */
+
+    /* Media query for devices up to 900px (Mobile and Small Tablets) */
+    @media(max-width: 900px){
+        /* 1. Change body to column layout, allow full scrolling */
+        body { 
+            flex-direction: column; 
+            overflow-y: auto; 
+            height: auto;
+        }
+
+        /* 2. Sidebar is FIXED and HIDDEN by default */
+        .sidebar { 
+            position: fixed;
+            z-index: 50; /* Above content, below toggle */
+            height: 100%;
+            padding-top: 60px; /* Space for the toggle button */
+            transform: translateX(-100%); /* Push off screen */
+            border-right: none;
+            box-shadow: 8px 0 15px rgba(0,0,0,0.5);
+        }
+        
+        /* Class added by JS to show sidebar */
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        /* 3. Show the hamburger toggle */
+        #menu-toggle {
+            display: block; 
+        }
+
+        /* 4. Adjust content padding to avoid overlap with toggle */
+        .content {
+            padding: 20px; 
+            padding-top: 60px; /* Push content down below the toggle area */
+        }
+        
+        /* 5. Cards become full width */
+        .card { 
+            width: 100%; 
+            padding: 25px;
+        }
+        
+        /* Hide title on mobile menu */
+        .sidebar h2 {
+            position: absolute; /* Place title below toggle space */
+            top: 20px;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        /* Reset sidebar button hover for mobile touch */
+        .sidebar button:hover, .sidebar a:hover {
+            padding-left: 20px; /* Default padding */
+        }
+    }
+    
+    /* Media query for devices between 901px and 1200px (Large Tablets / Small Laptops) */
+    @media (min-width: 901px) and (max-width: 1200px) {
+        .card {
+            width: 85%;
+        }
+        .content {
+            padding: 30px;
+        }
+    }
+
+   /* Container */
+.table-container {
+    width: 100%;
+    margin-top: 20px;
+    overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+/* Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #2f4054;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    table-layout: fixed;          /* KEY FIX */
+    word-wrap: break-word;        /* Ensure long text wraps */
+    white-space: normal;
+}
+
+/* Header */
+thead {
+    background: #233447;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+thead th {
+    padding: 14px 12px;
+    text-align: left;
+}
+
+/* Body */
+tbody tr {
+    background: #2f4054;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s ease;
+}
+
+tbody tr:hover {
+    background: #3a5270;
+}
+
+td {
+    padding: 14px 12px;
+    font-size: 14px;
+    color: #e0e0e0;
+    word-break: break-word;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+    th, td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Table Card */
+.tablecard {
+    background: #2f4054;
+    padding: 20px;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.05);
+    animation: fadeIn 0.4s ease-in-out;
+    margin: 10px;
+}
+.tablecard h3 {
+        color: #fff;
+        font-size: 28px;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-icon {
+    position: relative;
+    flex: 1;
+}
+
+.input-icon i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.input-icon input {
+    width: 100%;
+    padding: 6px 10px 6px 30px; /* left padding for icon */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-icon input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+.submit-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+</style>
+
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="popup" style="display: block;">
+            <i class="fa fa-check-circle"></i> {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<button id="menu-toggle" aria-label="Toggle Menu">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div class="sidebar">
+    <h2>Dashboard</h2>
+
+    <a href="/"><i class="fa fa-home"></i> Home Page</a>
+
+    <button onclick="openTab('profile')"><i class="fa fa-user"></i> Profile</button>
+    <button onclick="openTab('about')"><i class="fa fa-info-circle"></i> About</button>
+    <button onclick="openTab('education')"><i class="fa fa-graduation-cap"></i> Education</button>
+    <button onclick="openTab('experience')"><i class="fa fa-briefcase"></i> Experience</button>
+    <button onclick="openTab('internship')"><i class="fa fa-laptop-code"></i> Internship</button>
+    <button onclick="openTab('skill')"><i class="fa fa-cogs"></i>Skills</button>
+    <button onclick="openTab('project')"><i class="fa fa-laptop-code"></i>Project</button>
+    <a href="{% url 'contactview' %}"><i class="fa fa-table"></i>Contact Details</a>
+    <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Logout</a>
+</div>
+
+<div class="content">
+
+    <div id="profile" class="tab card">
+        <h3>Add Profile</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group"><input type="text" name="name" placeholder="Your Name" required></div>
+            <div class="form-group"><input type="email" name="email" placeholder="Your Email" required></div>
+            <div class="form-group"><input type="text" name="phone" placeholder="Phone"required></div>
+            <div class="form-group"><input type="file" name="image" required></div>
+            <div class="form-group"><input type="text" name="education" placeholder="Education" required></div>
+            <div class="form-group"><input type="text" name="profession" placeholder="Professions (comma separated)" required></div>
+            <div class="form-group"><input type="text" name="experience" placeholder="Experience" required></div>
+            <div class="form-group"><textarea name="location" placeholder="Location" required></textarea></div>
+            <div class="form-group">
+                <input type="text" name="github" placeholder="github link">
+            </div>
+            <div class="form-group">
+                <input type="text" name="linkedin" placeholder="Linked in link">
+            </div>
+            <div class="form-group">
+                <input type="text" name="x-twitter" placeholder="X link">
+            </div>
+            <div class="form-group">
+                <input type="text" name="stackoverflow" placeholder="stack overflow link">
+            </div>
+
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+    <div id="about" class="tab card">
+        <h3>Add About</h3>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'about' %}">
+            {% csrf_token %}
+            <div class="form-group"><input type="text" name="title" placeholder="About Title" required></div>
+            <div class="form-group"><textarea name="description" placeholder="Write about yourself" required></textarea></div>
+            <div class="form-group"><input type="file" name="AboutImage" required></div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+    <div id="education" class="tab card">
+        <h3>Add Education</h3>
+        <form method="POST" action="{% url 'education' %}">
+            {% csrf_token %}
+            <div class="form-group"><input type="text" name="title" placeholder="Degree Title" required></div>
+            <div class="form-group"><input type="text" name="institute" placeholder="Institute" required></div>
+            <div class="form-group"><input type="text" name="year" placeholder="Year" required></div>
+            <div class="form-group"><textarea name="description" placeholder="Description" required></textarea></div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+    <div id="experience" class="tab card">
+        <h3>Add Experience</h3>
+        <form method="POST" action="{% url 'experience' %}" >
+            {% csrf_token %}
+            <div class="form-group"><input type="text" name="company" placeholder="Company" required></div>
+            <div class="form-group"><input type="text" name="role" placeholder="Role" required></div>
+            <div class="form-group"><input type="text" name="duration" placeholder="Duration" required></div>
+            <div class="form-group"><textarea name="description" placeholder="Description" required></textarea></div>
+            <div class="form-group"><textarea name="details" placeholder=" Enter details in a new line " required></textarea></div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+    <div id="internship" class="tab card">
+        <h3>Add Internship</h3>
+        <form method="POST" action="{% url 'internship' %}">
+            {% csrf_token %}
+            <div class="form-group"><input type="text" name="title" placeholder="Internship Title" required></div>
+            <div class="form-group"><input type="text" name="company" placeholder="Company" required></div>
+            <div class="form-group"><input type="text" name="duration" placeholder="Duration" required></div>
+            <div class="form-group"><textarea name="description" placeholder="Description" required></textarea></div>
+            <div class="form-group"><textarea name="details" placeholder=" Enter details in a new line " required></textarea></div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+
+    <div id="skill" class="tab card">
+        <h3>Add Skill</h3>
+        <form method="POST" action="{% url 'skill' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="item" placeholder="Skill Title" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="proficiency" placeholder="Proficiency" required>
+            </div>
+            <div class="form-group">
+                <select name="genre" required class="custom-select" >
+                    <option value="">Select Skill Type</option>
+                    <option value="BACKEND">Backend</option>
+                    <option value="FRONTEND">FrontEnd</option>
+                    <option value="OTHER">Other Skills</option>
+                </select>
+            </div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+
+
+    <div id="project" class="tab card">
+        <h3>Add Project</h3>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'project' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Project Name" required>
+            </div>
+            <div class="form-group"><input type="file" name="image" required></div>
+            <div class="form-group">
+                <select name="genre" required class="custom-select" >
+                    <option value="">Select Project Type</option>
+                    <option value="django">Django</option>
+                    <option value="python">Python</option>
+                    <option value="fullstack">Full stack</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group"><textarea name="description" placeholder="Description" required></textarea></div>
+            <div class="form-group"><textarea name="tech" placeholder=" Enter Used Technology (comma separated)" required></textarea></div>
+            <div class="form-group"><textarea name="features" placeholder=" Enter Features in a new line" required></textarea></div>
+            <div class="form-group">
+                <input type="text" name="link" placeholder="Project link">
+            </div>
+            <div class="form-group">
+                <input type="text" name="code" placeholder="Project Code">
+            </div>
+            <button class="submit-btn">Save</button>
+        </form>
+    </div>
+</div>
+
+<!-- Contacts Table -->
+<div id="contact" class="tab tablecard">
+    <h3>Contacts</h3>
+    <form>
+        {% csrf_token %}
+        <div class="form-group search-row">
+            <div class="input-icon">
+                <i class="fa fa-search"></i> <!-- Font Awesome icon -->
+                <input type="text" name="search" placeholder="Search...">
+            </div>
+            <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
+        </div>
+    </form>    
+      
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="tblIdBody">
+                {% for eachContact in dctContact %}
+                <tr>
+                    <td>{{ eachContact.name }}</td>
+                    <td>{{ eachContact.email }}</td>
+                    <td>{{ eachContact.subject }}</td>
+                    <td>{{ eachContact.message }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+</div>
+
+
+<script>
+const sidebar = document.querySelector('.sidebar');
+const menuToggle = document.getElementById('menu-toggle');
+
+function openTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+    
+    // 🚨 NEW: Close sidebar when a new tab is opened on mobile
+    if (window.innerWidth <= 900) {
+        sidebar.classList.remove('active');
+        menuToggle.querySelector('i').className = 'fas fa-bars';
+    }
+    
+}
+openTab('profile');
+
+// 🚨 NEW: Toggle sidebar visibility on mobile
+menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    const icon = menuToggle.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.className = 'fas fa-times'; // Change to 'X' icon
+    } else {
+        icon.className = 'fas fa-bars'; // Change back to hamburger icon
+    }
+});
+
+// Simple function to dismiss the popup after a few seconds
+document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.querySelector('.popup');
+    if (popup) {
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 3000); 
+    }
+});
+
+</script>
+
+</body>
+</html>

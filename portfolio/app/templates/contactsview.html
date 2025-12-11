@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium White Table</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    body {
+        background: #1e1e2f;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .table-card {
+        background: #2b2b3f; 
+        border-radius: 15px;
+        padding: 25px;
+        margin: 40px auto;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .table-card h3 {
+        margin-bottom: 20px;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* Search bar */
+    .search-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .search-bar input {
+        flex: 1 1 auto;
+        min-width: 150px;
+        padding: 6px 12px 6px 35px;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+        background: #3a3a57;
+        color: #e0e0e0;
+        font-size: 14px;
+    }
+
+    .search-bar input::placeholder {
+        color: #bbb;
+    }
+
+    .search-bar i {
+        position: absolute;
+        left: 12px;
+        color: #bbb;
+        font-size: 14px;
+    }
+
+    .search-bar button {
+        padding: 6px 14px;
+        border-radius: 25px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Table styling */
+    .styled-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: #f5f5f5 !important; /* Changed from white to light gray */
+    color: #1e1e2f !important; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+
+    .styled-table thead th {
+    background-color: #2f4054 !important; /* Premium single color */
+    color: #fff !important;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+
+    .styled-table th, .styled-table td {
+        padding: 12px 15px;
+        vertical-align: middle;
+        word-wrap: break-word;
+    }
+
+    .styled-table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .styled-table tbody tr:hover {
+        background-color: #f0f8ff !important;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background: #f9f9f9 !important;
+    }
+
+    .action-btns button {
+        margin-right: 5px;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 5px;
+    }
+
+    .action-btns .btn-success {
+        background: #28a745;
+        border: none;
+    }
+
+    .action-btns .btn-danger {
+        background: #dc3545;
+        border: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .search-bar {
+            flex-direction: column;
+        }
+
+        .search-bar input {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .search-bar button {
+            width: 100%;
+        }
+
+        .styled-table th, .styled-table td {
+            padding: 8px 6px;
+            font-size: 12px;
+        }
+
+        .styled-table td {
+            white-space: normal !important; 
+        }
+
+        .action-btns button {
+            margin-bottom: 4px;
+        }
+    }
+    /* Stylish top navigation links */
+.top-links {
+    display: flex;
+    gap: 15px;
+    padding: 20px 30px;
+}
+
+.top-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: #2f4054;
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.top-links a i {
+    font-size: 14px;
+}
+
+/* Hover effect */
+.top-links a:hover {
+    background: #3b5170;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .top-links {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .top-links a {
+        width: auto;
+    }
+}
+
+</style>
+</head>
+<body>
+    <div class="top-links">
+        <a href="/"><i class="fa fa-home"></i> Home</a>
+        <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+    </div>
+    
+<div class="container table-card">
+    <h3>Contact Messages</h3>
+
+    <!-- Search bar -->
+    <form >
+        <div class="search-bar position-relative">
+            <input type="text" name="search" placeholder="Search messages...">
+            <button>Search</button>
+        </div>
+    </form>
+
+    <!-- Table -->
+    <table class="table styled-table align-middle">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>   
+                
+            {% for eachContact in dctContact %}
+                <tr>
+                    <td>{{ eachContact.name }}</td>
+                    <td>{{ eachContact.email }}</td>
+                    <td>{{ eachContact.subject }}</td>
+                    <td>{{ eachContact.message }}</td>
+                
+                
+                <!-- <td class="action-btns">
+                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                </td> -->
+                </tr>
+            {% endfor %}
+           
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

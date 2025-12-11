@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>404 Not Found</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Arvo&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      font-family: "Arvo", serif;
+      overflow: hidden; /* Prevent scroll */
+    }
+
+    .wrapper {
+      width: 100%;
+      height: 100vh;
+      transform-origin: top center;
+    }
+
+    .page_404 {
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .four_zero_four_bg {
+      background-image: url("https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
+      height: 350px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+    }
+
+    .four_zero_four_bg h1 {
+      font-size: 80px;
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .contant_box_404 {
+      margin-top: -25px;
+    }
+
+    .link_404 {
+      color: #fff;
+      background: #39ac31;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 15px;
+    }
+
+    /* AUTO SCALE FIX (more zoom) */
+@media (max-width: 480px) {
+  .wrapper {
+    transform: scale(0.95); /* was 0.85 */
+  }
+}
+
+@media (max-width: 380px) {
+  .wrapper {
+    transform: scale(0.85); /* was 0.75 */
+  }
+}
+
+@media (max-width: 330px) {
+  .wrapper {
+    transform: scale(0.75); /* was 0.65 */
+  }
+}
+.footer_404 {
+  position: fixed;      /* FIXED at bottom */
+  bottom: 0;            /* stick to bottom */
+  left: 0;
+  width: 100%;          /* full width */
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  padding: 10px 0;
+  opacity: 0.6;
+  z-index: 1000;        /* above other content */
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <section class="page_404">
+      <div class="four_zero_four_bg">
+        <h1>404</h1>
+      </div>
+      <br>
+      <div class="contant_box_404">
+        <h3>Looks like you're lost</h3>
+        <p>The page you are looking for is not available!</p>
+        <a href="/" class="link_404">Go to Home</a>
+      </div>
+    </section>
+  </div>
+  <footer class="footer_404">
+    © 2025 swadiqsdq — All Rights Reserved
+  </footer>  
+</body>
+</html>

@@ -1,0 +1,457 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{dctProfile.name}} | Python/Django Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+    
+
+</head>
+<body>
+
+    <!-- Header/Navbar -->
+    <header id='navbar'>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="#"><span>{{dctProfile.name|slice:":1"|upper}}</span>{{dctProfile.name|slice:"1:"}}.</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#work-experience">Experience</a></li>
+                    <li><a href="#portfolio">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+                    <li>
+                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                          <i class="fas fa-sun light-icon"></i>
+                          <i class="fas fa-moon dark-icon"></i>
+                        </button>
+                      </li>
+                </ul>            
+                <div class="hamburger">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h3>Hello, I'm</h3>
+                    <h1>{{ dctProfile.name }}</h1>
+                    <h2><span class="typed-text"></span><span class="cursor">&nbsp;</span></h2>
+                    <p>Full-stack developer specializing in Python, Django, and modern web applications with responsive design and exceptional user experiences.</p>
+                    <div class="social-icons">
+                        <a href="{{dctProfile.github}}"><i class="fab fa-github"></i></a>
+                        <a href="{{dctProfile.linkedin}}"><i class="fab fa-linkedin"></i></a>
+                        <a href="{{dctProfile.x}}"><i class="fab fa-x-twitter"></i></a>
+                        <a href="{{dctProfile.stackoverflow}}"><i class="fab fa-stack-overflow"></i></a>
+                    </div>
+                    <a href="#contact" class="btn secondary">Hire Me</a>
+                    <a href="/404" class="btn secondary">Download CV</a>
+                </div>
+                <div class="hero-image">
+                    <div class="image-wrapper">
+                        <img src="{{dctProfile.profilePhoto.url}}" alt="Mohamed Shodiq" class="profile-img">
+                        <div class="tech-icons">
+                            <i class="fab fa-python" title="Python"></i>
+                            <i class="fas fa-database" title="Django"></i>
+                            <i class="fab fa-html5" title="HTML5"></i>
+                            <i class="fab fa-css3-alt" title="CSS3"></i>
+                            <i class="fab fa-js" title="JavaScript"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About <span>Me</span></h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="{{dctAbout.image.url}}" alt="About Mohamed Shodiq">
+                </div>
+                <div class="about-text">
+                    <h3>{{dctAbout.title}}</h3>
+                    <p>{{ dctAbout.description }}</p>
+                    
+                    <div class="personal-info">
+                        <div class="info-item">
+                            <span>Name:</span>
+                            <p>{{dctProfile.name}}</p>
+                        </div>
+                        <div class="info-item">
+                            <span>Email:</span>
+                            <p>{{dctProfile.email}}</p>
+                        </div>
+                        <div class="info-item">
+                            <span>Education:</span>
+                            <p>{{dctProfile.education}}</p>
+                        </div>
+                        <div class="info-item">
+                            <span>Experience:</span>
+                            <p>{{dctProfile.experience}}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="education">Education</button>
+                        <button class="tab-btn" data-tab="experience">Experience</button>
+                        <button class="tab-btn" data-tab="internship">Internship</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="education">
+                        <ul class="timeline">
+                            {% for education in dctEducation %}
+                            <li>
+                                <h4>{{education.title}}</h4>
+                                <span>{{education.institute}}, {{education.year}}</span>
+                                <p>{{education.description}}</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                    
+                    <div class="tab-content" id="experience">
+                        <ul class="timeline">
+                            {% for experience in dctExperience %}
+                            <li>
+                                <h4>{{experience.role}}</h4>
+                                <span>{{experience.company}} | {{experience.duration}}</span>
+                                <p>{{experience.description}}</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div class="tab-content" id="internship">
+                        <ul class="timeline">
+                            {% for internship in dctInternship %}
+                            <li>
+                                <h4>{{internship.title}}</h4>
+                                <span>{{internship.company}} | {{internship.duration}}</span>
+                                <p>{{internship.description}}</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">My <span>Skills</span></h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fab fa-python"></i> Backend</h3>
+                    <div class="skill-items">
+                        {% for skill in dctSkills %}
+                            {% if skill.category == 'BACKEND' %}
+                                <div class="skill-item">
+                                    <span>{{skill.item}}</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: {{skill.proficiency}}%"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Frontend</h3>
+                    <div class="skill-items">
+                        {% for skill in dctSkills %}
+                            {% if skill.category == 'FRONTEND' %}
+                                <div class="skill-item">
+                                    <span>{{skill.item}}</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: {{skill.proficiency}}%"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> Other Skills</h3>
+                    <div class="skill-items">
+                        {% for skill in dctSkills %}
+                            {% if skill.category == 'OTHER' %}
+                                <div class="skill-item">
+                                    <span>{{skill.item}}</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: {{skill.proficiency}}%"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+<section class="experience" id="work-experience">
+    <div class="container">
+        <h2 class="section-title">Work <span>Experience</span></h2>
+        <div class="experience-timeline">
+            <!-- Current Job -->
+            {% for eachItem in dctExperience %}
+            <div class="timeline-item">  
+                <div class="timeline-date">{{eachItem.duration}}</div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <h3>{{eachItem.role}}</h3>
+                        <h4>{{eachItem.company}}</h4>
+                    </div>
+                    <ul class="timeline-list">
+                        {% for each in eachItem.details %}
+                            <li>{{each}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Internship -->
+            {% for eachItem in dctInternship %}
+            <div class="timeline-item">
+                <div class="timeline-date">{{eachItem.duration}}</div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <h3>{{eachItem.title}}</h3>
+                        <h4>{{eachItem.company}}</h4>
+                    </div>
+                    <ul class="timeline-list">
+                        {% for each in eachItem.details %}
+                            <li>{{each}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">My <span>Projects</span></h2>
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="django">Django</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            </div>
+            <div class="portfolio-grid">
+                {% for eachproject in dctProjects %}
+                <div class="portfolio-item" data-category="{{eachproject.category}}">
+                    <img src="{{eachproject.image.url}}?w=600&h=400&fit=crop" 
+                    alt="{{eachproject.name}}">
+                    <div class="portfolio-overlay">
+                        <h3>{{eachproject.name}}</h3>
+                        <p>{{eachproject.tech_list|slice:":3"|join:", "}}</p>
+                
+                        <div class="portfolio-links">
+                            <a href="{{eachItem.link}}"><i class="fas fa-link"></i></a>
+                            <a href="{{eachItem.code}}"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% comment %} <div class="portfolio-item" data-category="django">
+                    <img src="https://via.placeholder.com/600x400" alt="Blog Application">
+                    <div class="portfolio-overlay">
+                        <h3>Blog Application</h3>
+                        <p>Django, SQLite, HTML/CSS</p>
+                        <div class="portfolio-links">
+                            <a href="#"><i class="fas fa-link"></i></a>
+                            <a href="#"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="python">
+                    <img src="https://via.placeholder.com/600x400" alt="Data Analysis Tool">
+                    <div class="portfolio-overlay">
+                        <h3>Data Analysis Tool</h3>
+                        <p>Python, Pandas, Matplotlib</p>
+                        <div class="portfolio-links">
+                            <a href="#"><i class="fas fa-link"></i></a>
+                            <a href="#"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="fullstack">
+                    <img src="https://via.placeholder.com/600x400" alt="Task Management System">
+                    <div class="portfolio-overlay">
+                        <h3>Task Management System</h3>
+                        <p>Django, React, PostgreSQL</p>
+                        <div class="portfolio-links">
+                            <a href="#"><i class="fas fa-link"></i></a>
+                            <a href="#"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="django">
+                    <img src="https://via.placeholder.com/600x400" alt="CRM System">
+                    <div class="portfolio-overlay">
+                        <h3>CRM System</h3>
+                        <p>Django, DRF, JavaScript</p>
+                        <div class="portfolio-links">
+                            <a href="#"><i class="fas fa-link"></i></a>
+                            <a href="#"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="python">
+                    <img src="https://via.placeholder.com/600x400" alt="Automation Scripts">
+                    <div class="portfolio-overlay">
+                        <h3>Automation Scripts</h3>
+                        <p>Python, Selenium, BeautifulSoup</p>
+                        <div class="portfolio-links">
+                            <a href="#"><i class="fas fa-link"></i></a>
+                            <a href="#"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+            <div class="portfolio-modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <img src="" alt="" class="modal-img">
+                    <div class="modal-text">
+                        <h3 class="modal-title"></h3>
+                        <p class="modal-description"></p>
+                        <div class="modal-tech"></div>
+                        <div class="modal-features"></div>
+                        <a href="#" class="btn modal-link" target="_blank">View Project</a>
+                        <a href="#" class="btn secondary modal-code" target="_blank">View Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact <span>Me</span></h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-text">
+                            <h4>Location</h4>
+                            <p>{{dctProfile.location}}</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>{{dctProfile.email}}</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="contact-text">
+                            <h4>Phone</h4>
+                            <p>{{dctProfile.phone}}</p>
+                        </div>
+                    </div>
+                    <div class="contact-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Me a Message</h3>
+                    <form  method = "POST" id="contactForm" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" id="strIdName" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="strIdEmail" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="strIdSubject" name="subject" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="strIdMessage" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" id="btnIdSubmit" class="btn secondary">Send Message</button>
+                    </form>
+                    <div id="form-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#"><span>{{dctProfile.name|slice:":1"|upper}}</span>{{dctProfile.name|slice:"1:"}}.</a>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#work-experience">Experience</a></li>
+                        <li><a href="#portfolio">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Mohamed Shodiq. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+</html>
