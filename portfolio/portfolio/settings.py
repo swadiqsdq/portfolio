@@ -141,3 +141,6 @@ SESSION_COOKIE_AGE = 300
 
 # If user closes the browser, session ends
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+SECURE_SSL_REDIRECT = True
