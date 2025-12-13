@@ -131,9 +131,9 @@ DEFAULT_FILE_STORAGE = (
 )
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": os.environ.get("Root"),
+    "API_KEY": os.environ.get("443884268754564"),
+    "API_SECRET": os.environ.get("NhJlwxnTQyTsBra98eJa_gFFfWI"),
 }
 
 # ❌ DO NOT define MEDIA_ROOT or MEDIA_URL when using Cloudinary
