@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 IS_PRODUCTION = os.environ.get('IS_PRODUCTION', 'False') == 'True'
 
 # SECURITY WARNING: Fetch SECRET_KEY securely from environment variable (MUST be set on Render)
-SECRET_KEY = os.environ.get('SECRET_KEY', 'default-dev-key-you-must-change-this!')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'mi9!_vssd2q294m&aorwoh(_8$evjt3*$ret28w9xqf6c+vcuc')
 
 # Set DEBUG based on the environment variable
 DEBUG = not IS_PRODUCTION 
